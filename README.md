@@ -15,6 +15,10 @@ The authorizer can also be configured to accept tokens only from a set of truste
 
 The AWS API Gateway will then forward the access token JWT from the introspection response to the upstream API enabling a Zero Trust approach. The API in itself could also be leverage a Zero Trust design where the JWT holds the public key details for self-contained JWT verification as exemplified in this [Serverless API](https://github.com/curityio/serverless-zero-trust-api).
 
+Wrapper token phantom flow architecture :
+
+![deployment pattern](./docs/wrapper-token-phantom-flow.png "deployment pattern")
+
 
 ## Configuring the Lambda Authorizer
 
@@ -32,6 +36,7 @@ The AWS API Gateway will then forward the access token JWT from the introspectio
 ## Deploying the Lambda Authorizer
 
 After configuring the lambda authorizer, deploy it to the AWS using [Serverless](https://www.serverless.com/).
+[Serverless CLI](https://www.serverless.com/framework/docs/getting-started) must be installed before proceeding further. After the CLI is installed, run the following command to deploy the lambda code to AWS.
 
 ```
 ❯ sls deploy
@@ -64,7 +69,7 @@ API echoes back the received access token. Note that the JWT token received by t
 {"IntrospectedJWT":"eyJraWQiOiIxMjEyMDY2MDYyIiwieDV0IjoiaVpmaUNvazdHRGpwRnRmc0xEYW5tcUJpY3JVIiwiYWxnIjoiUlMyNTYifQ.eyJqdGkiOiIwZjlmZmY4Yy1iNmM3LTRmM2QtOGU5YS0zMjc2OTA1ZWQ5OWMiLCJkZWxlZ2F0aW9uSWQiOiJkMDg0Njc5ZC0zOGI0LTRiNjYtOThmYy0zMGVhMzk5NGQ1YTQiLCJleHAiOjE2NzM4ODU0ODEsIm5iZiI6MTY3Mzg0OTQ4MSwic2NvcGUiOiJvcGVuaWQiLCJpc3MiOiJodHRwczovLzUzYTQtMjQwNS0yMDEtNWMwZS0zODM5LTE0ODItMWQxNS1lZTNiLTg2NDIuaW4ubmdyb2suaW8vYnJhbmQxL29hdXRoLWFub255bW91cyIsInN1YiI6InN1cmVuIiwiYXVkIjoiY2xpZW50LWJyYW5kMSIsImlhdCI6MTY3Mzg0OTQ4MSwicHVycG9zZSI6ImFjY2Vzc190b2tlbiJ9.wG0q0XcCYKr_-A_fNjb1kqdLhxE03niCoFE8EFy3whuGlce_f3B6OK1JxXhIiO4Jls-hK8hjrj0v7YwPaBX8GVhLPDJXr3dROyTGlDEkfSR0fxjwkEdTChVP4Cu8X_D7KP5EPjj_DhQkQ6ZopQeKkC2PW4d9A3tvdKH1QhUvo6YJdwgQpeyJSKTzBNT3VDwHVR2PZAreOeYXUjgWAvXQttLmypGwo2ZAhIWeQAiss-F9eLR88yxYpK7ZBoMbYWTJbF348i03czhIpa9e4DPPa5qPK1WKEPpQk3b6dXbcp_qipRC2pWWTNE0Rxd65mX29CivTqEOLVLEtAP9I9Hksiw"}
 ```
 
-## Remove deployment 
+## Clean up  
 
 ```bash
 
