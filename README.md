@@ -20,6 +20,7 @@ The AWS API Gateway will then forward the access token JWT from the introspectio
 
 1. Clone this repository `git clone git@github.com:curityio/aws-wrapper-token-phantom-flow.git`.
 2. Update the `serverless.yml` file as defined below :
+
     Parameter | Description |
     --------- | ----------- |
     TRUSTED_ISSUERS | Comma separated list of FQDN of the trusted issuers.
