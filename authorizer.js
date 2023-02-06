@@ -80,9 +80,9 @@ exports.handler = async (event, context, callback) => {
   const authorizationHeader = event.authorizationToken || {};
   let wrapperAccessToken = '';
 
-  if (authorizationHeader && authorizationHeader.startsWith('Bearer ')) {
+  if (authorizationHeader && (authorizationHeader.startsWith('Bearer ') || authorizationHeader.startsWith('bearer'))) {
     // Get Wrapper token from the authorization header
-    wrapperAccessToken = authorizationHeader.substring(7);
+    wrapperAccessToken = authorizationHeader.substring(7).trim();
   }
   console.debug(`Authorizer: wrapperAccessToken : ${wrapperAccessToken}`);
 
@@ -98,6 +98,7 @@ exports.handler = async (event, context, callback) => {
       context.fail('Unauthorized');
     }
 
+    // response should be cached in order to avoid unnecessary round trips
     const response = await axios.get(`${issuer}/.well-known/openid-configuration`);
     console.debug(`Authorizer: JWKS URI : ${response.data.jwks_uri}`);
     console.debug(`Authorizer: Token Introspection endpoint : ${response.data.introspection_endpoint}`);
@@ -108,7 +109,7 @@ exports.handler = async (event, context, callback) => {
     console.debug('Authorizer: Wrapper token validation is successful');
 
     //Base64 encode client_id and client_secret to authenticate to token introspection endpoint
-    const basic_auth_header = Buffer.from(`${process.env.CLIENT_ID.trim()}:${process.env.CLIENT_SECRET.trim()}`, 'utf-8').toString('base64');
+    const basicAuthHeader = Buffer.from(`${process.env.CLIENT_ID.trim()}:${process.env.CLIENT_SECRET.trim()}`, 'utf-8').toString('base64');
 
     const requestData = {
       token: wrapperAccessToken
@@ -118,7 +119,7 @@ exports.handler = async (event, context, callback) => {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/jwt',
-        Authorization: `Basic ${basic_auth_header}`
+        Authorization: `Basic ${basicAuthHeader}`
       }
     };
 

@@ -22,7 +22,7 @@ exports.handler = async (event, context, callback) => {
   /* API shouldn't echo back the access token but since this is just an example API to show that the
    API received a JWT instead of the wrapper token sent by the client, it's returning the introspected JWT token for easy verification */
   const data = {
-    IntrospectedJWT: jwtAccessToken
+    introspected_jwt: jwtAccessToken
   };
 
   return {
