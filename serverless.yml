@@ -1,0 +1,33 @@
+service: wrapper-token-phantom-lambda
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  profile: dev # aws profile to be used for aws credentials
+  region: eu-west-1 # aws region to deploy the lambda function
+  versionFunctions: false
+
+functions:
+  authorizer:
+    name: wrapper-token-authorizer
+    description: Authorizes the call to the example-api
+    handler: authorizer.handler
+    environment:
+      # TRUSTED_ISSUERS: "https://auth.example.com/brand1/oauth-anonymous,https://auth.example.com/brand2/oauth-anonymous"
+      TRUSTED_ISSUERS: 'https://fb94-2401-4900-1c7a-1841-759f-e149-d50-12d.in.ngrok.io/dev/oauth/anonymous'
+      # REQUIRED_SCOPES: "openid,read,write"
+      REQUIRED_SCOPES: 'openid,read'
+      CLIENT_ID: 'client-one'
+      CLIENT_SECRET: '0ne!Secret'
+
+  exampleAPI:
+    name: example-api
+    description: Example API
+    handler: api.handler
+    events:
+      - http:
+          path: example-api
+          method: post
+          authorizer: authorizer
