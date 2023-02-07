@@ -96,6 +96,7 @@ exports.handler = async (event, context, callback) => {
     if (!issuerWhiteList.includes(issuer)) {
       console.debug('Authorizer: Issuer is not trusted, discarding the token');
       context.fail('Unauthorized');
+      return;
     }
 
     // response should be cached in order to avoid unnecessary round trips

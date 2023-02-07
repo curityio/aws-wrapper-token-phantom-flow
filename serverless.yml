@@ -10,17 +10,17 @@ provider:
   versionFunctions: false
 
 functions:
-  authorizer: 
+  authorizer:
     name: wrapper-token-authorizer
     description: Authorizes the call to the example-api
     handler: authorizer.handler
     environment:
-    # TRUSTED_ISSUERS: "https://auth.example.com/brand1/oauth-anonymous,https://auth.example.com/brand2/oauth-anonymous"
-      TRUSTED_ISSUERS: "https://auth.example.com/brand1/oauth-anonymous"
-    # REQUIRED_SCOPES: "openid,read,write"  
-      REQUIRED_SCOPES: "openid" 
-      CLIENT_ID: "introspection-client" 
-      CLIENT_SECRET: "password"  
+      # TRUSTED_ISSUERS: "https://auth.example.com/brand1/oauth-anonymous,https://auth.example.com/brand2/oauth-anonymous"
+      TRUSTED_ISSUERS: 'https://fb94-2401-4900-1c7a-1841-759f-e149-d50-12d.in.ngrok.io/dev/oauth/anonymous'
+      # REQUIRED_SCOPES: "openid,read,write"
+      REQUIRED_SCOPES: 'openid,read'
+      CLIENT_ID: 'client-one'
+      CLIENT_SECRET: '0ne!Secret'
 
   exampleAPI:
     name: example-api
