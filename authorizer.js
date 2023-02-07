@@ -131,6 +131,7 @@ exports.handler = async (event, context, callback) => {
     if (!verifyScopes(requiredScopes, introspectionResponse.data)) {
       console.debug('Authorizer: Insufficient scopes');
       context.fail('Unauthorized');
+      return;
     }
 
     // Return the Policy object

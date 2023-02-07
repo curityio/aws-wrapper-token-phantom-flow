@@ -17,21 +17,19 @@ The AWS API Gateway will then forward the access token JWT from the introspectio
 
 Wrapper token phantom flow architecture :
 
-![deployment pattern](./docs/wrapper-token-phantom-flow.png "deployment pattern")
-
+![deployment pattern](./docs/wrapper-token-phantom-flow.png 'deployment pattern')
 
 ## Configuring the Lambda Authorizer
 
 1. Clone this repository `git clone git@github.com:curityio/aws-wrapper-token-phantom-flow.git`.
 2. Update the `serverless.yml` file as defined below :
 
-    Parameter | Description |
-    --------- | ----------- |
-    TRUSTED_ISSUERS | Comma separated list of FQDN of the trusted issuers.
-    REQUIRED_SCOPES | Comma separated list of required scopes for API access.
-    CLIENT_ID       | The client_id of a client with the `introspection` capability.
-    CLIENT_SECRET   | The secret of the client with the `introspection` capability.
-
+   | Parameter       | Description                                                    |
+   | --------------- | -------------------------------------------------------------- |
+   | TRUSTED_ISSUERS | Comma separated list of FQDN of the trusted issuers.           |
+   | REQUIRED_SCOPES | Comma separated list of required scopes for API access.        |
+   | CLIENT_ID       | The client_id of a client with the `introspection` capability. |
+   | CLIENT_SECRET   | The secret of the client with the `introspection` capability.  |
 
 ## Deploying the Lambda Authorizer
 
@@ -66,10 +64,12 @@ API Response :
 API echoes back the received access token. Note that the JWT token received by the API is not the same wrapper token sent by the client but rather an JWT access token introspected the by the API gateway and forwarded to the API.
 
 ```json
-{"IntrospectedJWT":"eyJraWQiOiIxMjEyMDY2MDYyIiwieDV0IjoiaVpmaUNvazdHRGpwRnRmc0xEYW5tcUJpY3JVIiwiYWxnIjoiUlMyNTYifQ.eyJqdGkiOiIwZjlmZmY4Yy1iNmM3LTRmM2QtOGU5YS0zMjc2OTA1ZWQ5OWMiLCJkZWxlZ2F0aW9uSWQiOiJkMDg0Njc5ZC0zOGI0LTRiNjYtOThmYy0zMGVhMzk5NGQ1YTQiLCJleHAiOjE2NzM4ODU0ODEsIm5iZiI6MTY3Mzg0OTQ4MSwic2NvcGUiOiJvcGVuaWQiLCJpc3MiOiJodHRwczovLzUzYTQtMjQwNS0yMDEtNWMwZS0zODM5LTE0ODItMWQxNS1lZTNiLTg2NDIuaW4ubmdyb2suaW8vYnJhbmQxL29hdXRoLWFub255bW91cyIsInN1YiI6InN1cmVuIiwiYXVkIjoiY2xpZW50LWJyYW5kMSIsImlhdCI6MTY3Mzg0OTQ4MSwicHVycG9zZSI6ImFjY2Vzc190b2tlbiJ9.wG0q0XcCYKr_-A_fNjb1kqdLhxE03niCoFE8EFy3whuGlce_f3B6OK1JxXhIiO4Jls-hK8hjrj0v7YwPaBX8GVhLPDJXr3dROyTGlDEkfSR0fxjwkEdTChVP4Cu8X_D7KP5EPjj_DhQkQ6ZopQeKkC2PW4d9A3tvdKH1QhUvo6YJdwgQpeyJSKTzBNT3VDwHVR2PZAreOeYXUjgWAvXQttLmypGwo2ZAhIWeQAiss-F9eLR88yxYpK7ZBoMbYWTJbF348i03czhIpa9e4DPPa5qPK1WKEPpQk3b6dXbcp_qipRC2pWWTNE0Rxd65mX29CivTqEOLVLEtAP9I9Hksiw"}
+{
+  "introspected_jwt": "eyJraWQiOiIxMjEyMDY2MDYyIiwieDV0IjoiaVpmaUNvazdHRGpwRnRmc0xEYW5tcUJpY3JVIiwiYWxnIjoiUlMyNTYifQ.eyJqdGkiOiIwZjlmZmY4Yy1iNmM3LTRmM2QtOGU5YS0zMjc2OTA1ZWQ5OWMiLCJkZWxlZ2F0aW9uSWQiOiJkMDg0Njc5ZC0zOGI0LTRiNjYtOThmYy0zMGVhMzk5NGQ1YTQiLCJleHAiOjE2NzM4ODU0ODEsIm5iZiI6MTY3Mzg0OTQ4MSwic2NvcGUiOiJvcGVuaWQiLCJpc3MiOiJodHRwczovLzUzYTQtMjQwNS0yMDEtNWMwZS0zODM5LTE0ODItMWQxNS1lZTNiLTg2NDIuaW4ubmdyb2suaW8vYnJhbmQxL29hdXRoLWFub255bW91cyIsInN1YiI6InN1cmVuIiwiYXVkIjoiY2xpZW50LWJyYW5kMSIsImlhdCI6MTY3Mzg0OTQ4MSwicHVycG9zZSI6ImFjY2Vzc190b2tlbiJ9.wG0q0XcCYKr_-A_fNjb1kqdLhxE03niCoFE8EFy3whuGlce_f3B6OK1JxXhIiO4Jls-hK8hjrj0v7YwPaBX8GVhLPDJXr3dROyTGlDEkfSR0fxjwkEdTChVP4Cu8X_D7KP5EPjj_DhQkQ6ZopQeKkC2PW4d9A3tvdKH1QhUvo6YJdwgQpeyJSKTzBNT3VDwHVR2PZAreOeYXUjgWAvXQttLmypGwo2ZAhIWeQAiss-F9eLR88yxYpK7ZBoMbYWTJbF348i03czhIpa9e4DPPa5qPK1WKEPpQk3b6dXbcp_qipRC2pWWTNE0Rxd65mX29CivTqEOLVLEtAP9I9Hksiw"
+}
 ```
 
-## Clean up  
+## Clean up
 
 ```bash
 
@@ -82,7 +82,7 @@ Removing wrapper-token-phantom-lambda from stage dev (eu-west-1)
 
 ## More Information
 
-* Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
-* [Use API Gateway Lambda authorizers](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
+- Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
+- [Use API Gateway Lambda authorizers](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html)
 
 Copyright (C) 2023 Curity AB.
